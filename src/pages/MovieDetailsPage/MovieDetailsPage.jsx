@@ -37,7 +37,9 @@ const MovieDetailsPage = () => {
             </Header>
 
             <main>
-                <Link to={goBackRef.current}>Go back</Link>
+                <Link className={s.link} to={goBackRef.current}>
+                    Go back
+                </Link>
                 <section className={s.origin}>
                     <div className={s.imgWrapper}>
                         <img
@@ -66,10 +68,14 @@ const MovieDetailsPage = () => {
                         </div>
                         <ul className={s.navAddList}>
                             <li className={s.navAddItem}>
-                                <Link to="cast">Cast</Link>
+                                <Link className={s.link} to="cast">
+                                    Cast
+                                </Link>
                             </li>
                             <li className={s.navAddItem}>
-                                <Link to="reviews">Reviews</Link>
+                                <Link className={s.link} to="reviews">
+                                    Reviews
+                                </Link>
                             </li>
                         </ul>
                     </div>
