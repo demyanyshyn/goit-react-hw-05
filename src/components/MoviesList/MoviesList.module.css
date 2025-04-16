@@ -1,0 +1,16 @@
+.sectionWrapper {
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        box-sizing: border-box;
+        justify-content: center;
+    }
+    li {
+        border: 1px solid black;
+        position: relative;
+    }
+    img {
+        box-sizing: border-box;
+    }
+}

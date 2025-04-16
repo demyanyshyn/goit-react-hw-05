@@ -1,53 +1,45 @@
-import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import ContactForm from './components/ContactForm/ContactForm';
-import ContactList from './components/ContactList/ContactList';
-import SearchBox from './components/SearchBox/SearchBox';
-import plugContacts from './contacts.json';
+import { lazy, Suspense } from 'react';
+
+// import MoviesPage from './pages/movies/MoviesPage';
+
+// import HomePage from './pages/home/HomePage';
+// import NotFound from './pages/NotFound/NotFound';
+// import MovieDetailsPage from './pages/MovieDetailsPage/MovieDetailsPage';
+// import MovieReviews from './components/MovieReviews/MovieReviews';
+// import MovieCast from './components/MovieCast/MovieCast';
+
+// lazy
+const MoviesPage = lazy(() => import('./pages/movies/MoviesPage'));
+const HomePage = lazy(() => import('./pages/home/HomePage'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+const MovieDetailsPage = lazy(() =>
+    import('./pages/MovieDetailsPage/MovieDetailsPage')
+);
+const MovieReviews = lazy(() =>
+    import('./components/MovieReviews/MovieReviews')
+);
+const MovieCast = lazy(() => import('./components/MovieCast/MovieCast'));
 
 const App = () => {
-    const localStorageContactList = JSON.parse(
-        localStorage.getItem('contact-list')
-    );
-
-    const [inputValue, setInputValue] = useState('');
-    const [contactList, setContactList] = useState(() => {
-        return localStorageContactList ? localStorageContactList : plugContacts;
-    });
-
-    useEffect(() => {
-        localStorage.setItem('contact-list', JSON.stringify(contactList));
-    }, [contactList]);
-
-    const handleDeleteContact = id => {
-        const newContactList = contactList.filter(item => item.id !== id);
-        setContactList(newContactList);
-    };
-
-    const handleFilterInput = evt => {
-        setInputValue(evt.target.value);
-    };
-
-    const addNewContact = contact => {
-        setContactList([...contactList, contact]);
-    };
     return (
-        <section className="app">
-            <h1>Phonebook</h1>
-            <ContactForm
-                contactList={contactList}
-                addNewContact={addNewContact}
-            />
-            <SearchBox
-                handleInput={handleFilterInput}
-                inputValue={inputValue}
-            />
-            <ContactList
-                contactList={contactList}
-                handleDeleteContact={handleDeleteContact}
-                inputValue={inputValue}
-            />
-        </section>
+        <>
+            <Suspense fallback={<h2>Loading....</h2>}>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/movies" element={<MoviesPage />} />
+                    <Route
+                        path="/movies/:movieId"
+                        element={<MovieDetailsPage />}
+                    >
+                        <Route path="reviews" element={<MovieReviews />} />
+                        <Route path="cast" element={<MovieCast />} />
+                    </Route>
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </Suspense>
+        </>
     );
 };
 export default App;
