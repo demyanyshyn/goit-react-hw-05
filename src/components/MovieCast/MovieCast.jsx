@@ -18,7 +18,7 @@ const MovieCast = () => {
             }
         };
         getCast();
-    }, []);
+    }, [movieId]);
 
     if (!cast) return <h3>Loading</h3>;
     return (

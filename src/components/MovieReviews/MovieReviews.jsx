@@ -19,7 +19,7 @@ const MovieReviews = () => {
             }
         };
         getReviews();
-    }, []);
+    }, [movieId]);
 
     if (!reviews) return <h3>Loading</h3>;
     if (reviews.results.length === 0) return <h3>No review yet</h3>;

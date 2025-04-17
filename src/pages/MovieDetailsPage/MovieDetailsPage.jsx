@@ -24,7 +24,7 @@ const MovieDetailsPage = () => {
         };
 
         getDetails();
-    }, []);
+    }, [movieId]);
     console.log('movieDetails: ', movieDetails);
 
     if (movieDetails === '404') return <NotFound />;
